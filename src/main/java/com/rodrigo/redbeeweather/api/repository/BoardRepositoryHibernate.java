@@ -1,14 +1,14 @@
 package com.rodrigo.redbeeweather.api.repository;
 
 import com.rodrigo.redbeeweather.api.model.Board;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Transactional
@@ -25,12 +25,26 @@ public class BoardRepositoryHibernate implements BoardRepository{
     }
 
     @Override
-    public void delete(String boardId) {
-        entityManager.remove(find(boardId));
+    public void delete(Board board) {
+        entityManager.remove(board);
     }
 
     @Override
-    public Board find(String boardId) {
-        return entityManager.find(Board.class, boardId);
+    public Board findByBoardId(Long boardId) {
+        Board board = (Board) entityManager.createQuery("SELECT t from Board t where t.id= :boardId").setParameter("boardId", boardId).getSingleResult();
+        return board;
+    }
+
+    @Override
+    public void updateBoard(Board board) {
+        entityManager.merge(board);
+    }
+
+    @Override
+    public List<Board> getAllBoards() {
+        List resultList = entityManager.createQuery("SELECT t from Board t", Board.class).getResultList();
+        List<Board> boards = new ArrayList();
+        boards.addAll(resultList);
+        return boards;
     }
 }

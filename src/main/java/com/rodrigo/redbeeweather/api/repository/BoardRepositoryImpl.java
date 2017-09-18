@@ -1,9 +1,10 @@
 package com.rodrigo.redbeeweather.api.repository;
 
 import com.rodrigo.redbeeweather.api.model.Board;
-import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,19 +19,28 @@ public class BoardRepositoryImpl implements BoardRepository{
 
     @Override
     public void save(Board boardToSave) {
-        boardMap.put(boardToSave.getBoardId().toString(), boardToSave);
+        boardMap.put(boardToSave.getId().toString(), boardToSave);
 
     }
 
     @Override
-    public void delete(String boardId) {
-        Board boardToRemove = boardMap.get(boardId);
-        boardMap.remove(boardId);
+    public void delete(Board boardId) {
+        boardMap.remove(boardId.getId());
 
     }
 
     @Override
-    public Board find(String boardId) {
+    public Board findByBoardId(Long boardId) {
         return boardMap.get(boardId);
+    }
+
+    @Override
+    public void updateBoard(Board board) {
+
+    }
+
+    @Override
+    public List<Board> getAllBoards() {
+        return new ArrayList<>();
     }
 }

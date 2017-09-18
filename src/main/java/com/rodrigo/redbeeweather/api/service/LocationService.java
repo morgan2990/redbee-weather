@@ -1,12 +1,22 @@
 package com.rodrigo.redbeeweather.api.service;
 
+import com.rodrigo.redbeeweather.api.model.Board;
 import com.rodrigo.redbeeweather.api.model.Location;
 
+import java.util.Set;
+
 public interface LocationService {
-    Location retrieveLocation(String locationId);
+    Location retrieveLocation(Long locationId);
 
-    void saveLocation(Location locationToSave);
+    Location saveLocation(Location locationToSave);
 
-    void deleteLocation(String locationId);
+    Location deleteLocation(Long locationId);
 
+    void removeBoardFromLocation(Board eachBoard, Location locationToDelete);
+
+    Set<Location> getAllLocations();
+
+    Location updateLocation(Location locationToUpdate);
+
+    Set<Location> retrieveAllLocations();
 }

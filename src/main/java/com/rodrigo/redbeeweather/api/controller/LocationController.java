@@ -7,8 +7,10 @@ import com.rodrigo.redbeeweather.api.service.LocationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
-@RequestMapping("/location/{locationId}")
+@RequestMapping("/location")
 public class LocationController {
 
     @Autowired
@@ -22,18 +24,28 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @RequestMapping(method= RequestMethod.GET)
+    @RequestMapping(method= RequestMethod.GET, value="/{locationId}")
     public Location retrieveLocation (@PathVariable String locationId){
-        return locationService.retrieveLocation(locationId);
+        return locationService.retrieveLocation(Long.valueOf(locationId));
+    }
+
+    @RequestMapping(method= RequestMethod.GET)
+    public Set<Location> retrieveAllLocations (){
+        return locationService.retrieveAllLocations();
     }
 
     @RequestMapping(method= RequestMethod.POST)
-    public void saveLocation (@RequestBody Location locationToSave){
-        locationService.saveLocation(locationToSave);
+    public Location saveLocation (@RequestBody Location locationToSave){
+        return locationService.saveLocation(locationToSave);
     }
 
     @RequestMapping(method= RequestMethod.DELETE)
-    public void deleteLocation (@PathVariable String LocationId){
-        locationService.deleteLocation(LocationId);
+    public Location deleteLocation (@PathVariable String locationId){
+        return locationService.deleteLocation(Long.valueOf(locationId));
+    }
+
+    @RequestMapping(method= RequestMethod.PUT)
+    public Location updateLocation (@RequestBody Location locationToUpdate){
+        return locationService.updateLocation(locationToUpdate);
     }
 }

@@ -2,12 +2,17 @@ package com.rodrigo.redbeeweather.api.repository;
 
 import com.rodrigo.redbeeweather.api.model.Board;
 
+import java.util.List;
+
 
 public interface BoardRepository {
     void save(Board boardToSave);
 
-    void delete(String boardId);
+    void delete(Board boardId);
 
-    Board find(String boardId);
+    Board findByBoardId(Long boardId);
 
+    void updateBoard(Board board);
+
+    List<Board> getAllBoards();
 }
